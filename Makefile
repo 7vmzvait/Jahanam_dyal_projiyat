@@ -25,14 +25,13 @@ SRCS = \
 	$(EXEC_DIR)/exec.c \
 	$(EXEC_DIR)/handle_redir.c \
 	$(EXEC_DIR)/redir.c \
-	$(EXEC_DIR)/memory_management.c\
 	$(EXEC_DIR)/signals_handler.c\
 	$(EXEC_DIR)/init_shell.c\
 	$(EXEC_DIR)/builtin_handler.c\
-	$(EXEC_DIR)/heredoc_handler.c\
 	$(EXEC_DIR)/malti-cmd_handler.c\
 	$(EXEC_DIR)/free_tools.c\
 	$(EXEC_DIR)/execve_handler.c\
+	$(EXEC_DIR)/heredoc.c\
 	$(BUILTINS)/echo.c \
 	$(BUILTINS)/cd.c \
 	$(BUILTINS)/exit.c \

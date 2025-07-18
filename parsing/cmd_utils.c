@@ -24,7 +24,10 @@ t_cmd	*new_cmd_node(void)
 	cmd->outfile = NULL;
 	cmd->append = 0;
 	cmd->heredoc = 0;
+	cmd->here_doc_fd = -1;
 	cmd->fd = STDOUT_FILENO;
+	cmd->flags = false;
+	cmd->heredoc_filename = NULL;
 	cmd->pipe_to_next = 0;
 	cmd->next = NULL;
 	return (cmd);

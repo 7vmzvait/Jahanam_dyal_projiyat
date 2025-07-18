@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void	handle_heredoc(t_cmd *cmd, char **tokens, int *i)
+void	handle_heredoc_1(t_cmd *cmd, char **tokens, int *i)
 {
 	(void)tokens;
 	(*i)++;
@@ -62,7 +62,7 @@ void	check_redir(t_cmd *cmd, char **tokens, int *i)
 	else if (!ft_strcmp(tokens[*i], ">>"))
 		handle_append(cmd, tokens, i);
 	else if (!ft_strcmp(tokens[*i], "<<"))
-		handle_heredoc(cmd, tokens, i);
+		handle_heredoc_1(cmd, tokens, i);
 }
 
 int	is_redir(char *tokens)

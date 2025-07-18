@@ -13,18 +13,18 @@
 #include "../include/minishell.h"
 #include "parsing.h"
 
-t_cmd	*parse_tokens1(char **tokens)
+t_cmd *parse_tokens1(char **tokens, t_cmd *cmd2, t_env *env)
 {
-	t_cmd	*cmd_list;
-	t_cmd	*cmd;
-	int		i;
+    t_cmd *cmd_list = NULL;
+    t_cmd *cmd = NULL;
+    int i = 0;
 
-	cmd_list = NULL;
-	i = 0;
-	while (tokens[i])
-	{
-		if (!cmd_list)
-		{
+    (void)cmd2;
+
+    while (tokens[i]) 
+    {
+       if (!cmd_list)
+       {
 			cmd = new_cmd_node();
 			if (!cmd)
 				return (NULL);
@@ -36,32 +36,32 @@ t_cmd	*parse_tokens1(char **tokens)
 			cmd = new_cmd_node();
 			if (!cmd)
 			{
-				// free_cmds(cmd_list);
 				return (NULL);
 			}
 			add_cmd_to_list(&cmd_list, cmd);
 			i++;
 			continue ;
 		}
-		else if (!ft_strcmp(tokens[i], "<") || !ft_strcmp(tokens[i], "<<"))
+        else if (!ft_strcmp(tokens[i], "<<")) 
 		{
-			handle_redir2(cmd, tokens, &i);
-			if (cmd->heredoc == 1)
-				cmd->save_del = ft_strdup(tokens[i]);
-			i++;
-			continue ;
-		}
-		else if (!ft_strcmp(tokens[i], ">") || !ft_strcmp(tokens[i], ">>"))
-		{
-			handle_redir2(cmd, tokens, &i);
-			i++;
-			continue ;
-		}
-		else
-		{
-			add_arg_to_cmd(cmd, ft_strdup(tokens[i]));
-		}
-		i++;
-	}
-	return (cmd_list);
+            handle_redir2(cmd, tokens, &i);
+            cmd->heredoc = 1;
+            
+            if (handle_heredoc(cmd, tokens[i], env) != 0)
+                return (NULL);
+            i++;
+            continue;
+        }
+        else if (!ft_strcmp(tokens[i], "<") || !ft_strcmp(tokens[i], ">") || 
+                 !ft_strcmp(tokens[i], ">>")) {
+            handle_redir2(cmd, tokens, &i);
+            i++;
+            continue;
+        }
+        else{
+            add_arg_to_cmd(cmd, ft_strdup(tokens[i]));
+        }
+        i++;
+    }
+    return cmd_list;
 }

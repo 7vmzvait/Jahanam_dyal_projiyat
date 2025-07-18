@@ -43,7 +43,7 @@ int	ft_cd(t_env *env, char **args)
 		path = getenv("OLDPWD");
 	else
 		path = args[1];
-	if (access(path, F_OK) == -1 && ft_strcmp(path, "\""))
+	if (access(path, F_OK) == -1 || !ft_strcmp(path, "\""))
 	{
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd("cd: ", 2);

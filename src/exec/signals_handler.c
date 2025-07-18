@@ -12,6 +12,19 @@
 
 #include "../../include/minishell.h"
 
+void	sig_handler_child(int signum)
+{
+	(void)signum;
+	write(1, "\n", 1);
+	exit(130);
+}
+
+void	setup_heredoc_signals(void)
+{
+	signal(SIGINT, sig_handler_child);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 void	sigint_handler(int sig)
 {
 	(void)sig;

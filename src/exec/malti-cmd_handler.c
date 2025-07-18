@@ -22,11 +22,12 @@ void	handle_empty_command(t_cmd *cmd)
 	exit(g_exit_status);
 }
 
-void	setup_input_redirection(t_cmd *cmd, t_context *ctx, t_env *env)
+void	setup_input_redirection(t_cmd *cmd, t_context *ctx)
 {
-	if (cmd->heredoc == 1)
+	if (cmd->here_doc_fd != -1 && cmd->heredoc == 1)
 	{
-		here_doc(cmd->save_del, cmd, env);
+		dup2(cmd->here_doc_fd, STDIN_FILENO);
+		close(cmd->here_doc_fd);
 	}
 	else if (cmd->infile)
 	{
@@ -70,14 +71,16 @@ void	execute_command(t_cmd *cmd, t_context *ctx, t_shell *shell, t_env *env)
 		exit(0);
 	}
 	else
+	{
 		exec(cmd->args, shell, env, cmd);
+	}
 }
 
 void	child_process(t_cmd *cmd, t_context *ctx, t_shell *shell, t_env *env)
 {
 	if (!cmd->args)
 		handle_empty_command(cmd);
-	setup_input_redirection(cmd, ctx, env);
+	setup_input_redirection(cmd, ctx);
 	setup_output_redirection(cmd, ctx);
 	execute_command(cmd, ctx, shell, env);
 }

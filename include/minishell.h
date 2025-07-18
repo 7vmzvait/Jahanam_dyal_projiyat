@@ -20,6 +20,7 @@ extern int			g_exit_status;
 typedef struct s_context
 {
 	int				prev_pipe;
+	int				save_stdin;
 	bool			is_builtin;				
 	int				last_pid;
 	char			**env;
@@ -40,16 +41,12 @@ typedef struct s_env
 	t_shell			*env_list;
 }					t_env;
 
-
-bool				is_parent_only_builtin(char *cmd);
-void				heredoc_signals_handler_flags(bool flags);
-void				set_signals_default(void);
+void				setup_heredoc_signals();
+void				sig_handler_child(int signum);
+int					handle_heredoc(t_cmd *cmd, char *delimiter, t_env *env);
+bool				is_parent_only_builtin(char *cmd);;
 void				heredoc_signals_handler(void);
-void				sigquit_handler(int sig);
 void				sigint_handler(int sig);
-void				set_signals_default(void);
-void				set_signals_empty(void);
-bool				is_parent_only_builtin(char *cmd);
 void				execute_builtins_no_redir(t_cmd *cmd,t_env *env,t_shell **shell);
 int					is_builtn_no_redir(char *cmd);
 void				print_exit_error(int option, char **args);
@@ -74,7 +71,7 @@ void				init_shell(char **env, t_context *ctx, t_shell *shell,
 void				free_cmd_args(t_cmd *cmd);
 void				free_env(char **env);
 void				handle_signals(int sig);
-t_cmd				*parse_input(char *input, t_env *env,t_context *ctx);
+t_cmd				*parse_input(char *input, t_env *env,t_context *ctx,t_cmd *cmd);
 int					redir_infile(t_cmd *cmd);
 int					redir_outfile(t_cmd *cmd);
 char				*getenv_path(t_env *env);

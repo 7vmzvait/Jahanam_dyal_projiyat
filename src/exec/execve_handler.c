@@ -47,6 +47,7 @@ void	exec(char **cmd, t_shell *shell, t_env *env, t_cmd *cmd2)
 	if (!path)
 	{
 		print_command_not_found(cmd);
+		g_exit_status = 127;
 		ft_malloc(0, 0);
 		exit(127);
 	}
@@ -57,6 +58,7 @@ void	exec(char **cmd, t_shell *shell, t_env *env, t_cmd *cmd2)
 		write(2, ": ", 2);
 		ft_putendl_fd("Is a directory", 2);
 		ft_malloc(0, 0);
-		exit(127);
+		g_exit_status = 126;
+		exit(126);
 	}
 }

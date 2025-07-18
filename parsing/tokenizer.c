@@ -54,9 +54,8 @@ char	**tokenize(char *line, t_env *env)
 				word = extract_quoted(line, &i, &is_single);
 				if (!word)
 				{
-					printf("Am here if you se me\n");
 					print_error2("bash: syntax error near unexpected token","`newline'");
-					g_exit_status = 127;
+					g_exit_status = 2;
 					return (NULL);
 				}
 				if (is_single)
@@ -65,8 +64,7 @@ char	**tokenize(char *line, t_env *env)
 					expanded = expand_variables(word, env_path, g_exit_status,
 							0); // <== split=0 for quotes
 				ft_strcat(token_buf, expanded);
-				// free(word);
-				// free(expanded);
+;
 				has_token = 1;
 			}
 			else

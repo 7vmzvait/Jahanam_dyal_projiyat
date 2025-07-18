@@ -29,7 +29,7 @@ void	ft_readline(t_cmd *cmd, t_shell *shell, t_context *ctx, t_env *env_var)
 		}
 		if (*input)
 			add_history(input);
-		cmd = parse_input(input, env_var, ctx);
+		cmd = parse_input(input, env_var, ctx, cmd);
 		if (cmd && cmd->args && cmd->args[0]
 			&& is_parent_only_builtin(cmd->args[0]) && cmd->pipe_to_next != 1
 			&& !cmd->infile && !cmd->outfile)

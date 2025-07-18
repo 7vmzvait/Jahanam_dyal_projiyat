@@ -20,9 +20,11 @@
 #include <string.h>
 #include "../libft/libft.h"
 #include <signal.h>
-
+// #include "../include/minishell.h"
 
 #define MAX_TOKENS 1024
+
+typedef struct s_env t_env;
 typedef enum e_token_type
 {
     PIPE,
@@ -45,9 +47,11 @@ typedef struct s_cmd
     char **args;
     char *infile;
     char *outfile;
-    char  *save_del;
     int fd;
+    int flags;
+    int here_doc_fd;
     int append;
+    char *heredoc_filename;
     int heredoc;
     int pipe_to_next;
     struct s_cmd *next;
@@ -63,8 +67,6 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	*ft_malloc(size_t size, int mode);
 char *ft_strncpy(char *dest, const char *src, unsigned int n);
 char *ft_strcat(char *dest, const char *src);
-
-
 int get_token_len(char *line, int i);
 void	print_error2(const char *prefix, const char *name);
 
@@ -107,7 +109,7 @@ char *expand_variables(const char *input, char **envp, int exit_status, int spli
 t_token_type get_token_type(char *str);
 
 t_cmd *parse_tokens(t_token *tokens);
-t_cmd *parse_tokens1(char **tokens);
+t_cmd	*parse_tokens1(char **tokens,t_cmd *cmd,t_env *env);
 t_token *tokenize_input(char *str);
 
 
