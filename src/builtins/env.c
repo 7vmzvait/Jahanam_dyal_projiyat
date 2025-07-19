@@ -20,6 +20,8 @@ char	*ft_create_env_line(t_shell *shell)
 	int		j;
 	char	*join;
 
+	if (!shell->key || !shell->value)
+		return (NULL);
 	if (!shell->value)
 		return (ft_strdup(shell->key));
 	len = (ft_strlen(shell->key) + ft_strlen(shell->value));
@@ -41,6 +43,8 @@ void	display_env_list(t_env *env)
 	int		counter;
 	char	**env_var;
 
+	if (!env)
+		return;
 	counter = 0;
 	current = env->env_list;
 	while (current)

@@ -44,7 +44,6 @@ char *getenv_from_envp(char *var, char **envp)
 {
     int i = 0;
     int len = ft_strlen(var);
-
     while (envp[i])
     {
         if (!ft_strncmp(envp[i], var, len) && envp[i][len] == '=')

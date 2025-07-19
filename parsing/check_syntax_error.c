@@ -28,7 +28,7 @@ void	print_error2(const char *prefix, const char *name)
 	}
 }
 
-int	check_syntax_error(char **tokens)
+int	check_syntax_error(char **tokens ,t_token *type)
 {
 	int i = 0;
 
@@ -49,9 +49,7 @@ int	check_syntax_error(char **tokens)
 			print_error2("bash: syntax error near unexpected token", "`||`");
 			return (1);
 		}
-		if ((!ft_strcmp(tokens[i], "<") || !ft_strcmp(tokens[i], ">")
-				|| !ft_strcmp(tokens[i], "<<") || !ft_strcmp(tokens[i], ">>"))
-			&& (!tokens[i + 1] || is_special(tokens[i + 1][0])))
+		if ((!ft_strcmp(tokens[i], "<") || !ft_strcmp(tokens[i], ">") || !ft_strcmp(tokens[i], "<<") || !ft_strcmp(tokens[i], ">>")) &&  !type->flags && (!tokens[i + 1] || is_special(tokens[i + 1][1])))
 		{
 			print_error2("bash: syntax error near unexpected token",
 				"`newline'");

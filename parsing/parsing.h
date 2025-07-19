@@ -23,8 +23,25 @@
 // #include "../include/minishell.h"
 
 #define MAX_TOKENS 1024
-
+#define TOKEN_BUF_SIZE 4096
 typedef struct s_env t_env;
+
+typedef struct s_tokenizer
+{
+	char	**tokens;
+	char	**env_path;
+	char	token_buf[4096];
+	char	*word;
+	char	*expanded;
+	int		i;
+	int		j;
+	int		has_token;
+	int		is_single;
+	int		start;
+	int		len;
+}	t_tokenizer;
+
+
 typedef enum e_token_type
 {
     PIPE,
@@ -39,6 +56,7 @@ typedef struct s_token
 {
     t_token_type type;
     char *value;
+    bool flags;
     struct s_token *next;
 } t_token;
 
@@ -76,7 +94,7 @@ void skip_spaces(char *line, int *i);
 t_token_type get_token_type(char *str);
 char *extract_word(const char *input, int *i);
 char *extract_special(const char *input, int *i);
-char *extract_quoted(const char *input, int *i, int *is_single);
+char	*extract_quoted(const char *input, int *i, int *is_single ,t_token *type);
 char *extract_var_name(const char *str, int *i);
 
 t_cmd *new_cmd_node(void);
@@ -92,7 +110,7 @@ void free_tokens(char **tokens);
 void free_command_list(t_cmd *cmds);
 void free_cmds(t_cmd *head);
 
-int check_syntax_error(char **tokens);
+int	check_syntax_error(char **tokens ,t_token *type);
 
 void print_cmds(t_cmd *cmds);
 
@@ -109,8 +127,8 @@ char *expand_variables(const char *input, char **envp, int exit_status, int spli
 t_token_type get_token_type(char *str);
 
 t_cmd *parse_tokens(t_token *tokens);
-t_cmd	*parse_tokens1(char **tokens,t_cmd *cmd,t_env *env);
-t_token *tokenize_input(char *str);
+t_cmd *parse_tokens1(char **tokens, t_env *env,t_token *type);
+t_token *tokenize_input(char *str,t_token *type);
 
 
 char *ft_itoa_custom(int n);

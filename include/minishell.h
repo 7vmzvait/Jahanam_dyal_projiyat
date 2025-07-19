@@ -71,7 +71,7 @@ void				init_shell(char **env, t_context *ctx, t_shell *shell,
 void				free_cmd_args(t_cmd *cmd);
 void				free_env(char **env);
 void				handle_signals(int sig);
-t_cmd				*parse_input(char *input, t_env *env,t_context *ctx,t_cmd *cmd);
+t_cmd *parse_input(char *input,t_env *env,t_context *ctx,t_token *type);
 int					redir_infile(t_cmd *cmd);
 int					redir_outfile(t_cmd *cmd);
 char				*getenv_path(t_env *env);
@@ -79,7 +79,7 @@ int					is_builtin_command(char *command);
 int					execute_builtins(t_cmd *cmd, t_shell *shell, t_env *env);
 int					run_builtins(t_cmd *cmd, t_shell *shell, t_env *env,
 						t_context *ctx);
-char				**tokenize(char *line, t_env *env);
+char				**tokenize(char *line, t_env *env,t_token *type);
 int					ft_export1(t_shell **shell, char **args, t_env *env);
 char				*ft_create_env_line(t_shell *shell);
 char				**list_to_array(t_env *env, t_shell *shell);

@@ -18,7 +18,7 @@ static int	is_special_char(char c)
 	return (c == '|' || c == '<' || c == '>');
 }
 
-char	**tokenize(char *line, t_env *env)
+char	**tokenize(char *line, t_env *env,t_token *type)
 {
 	char	**tokens;
 	char	**env_path;
@@ -51,7 +51,7 @@ char	**tokenize(char *line, t_env *env)
 			if (line[i] == '"' || line[i] == '\'')
 			{
 				is_single = 0;
-				word = extract_quoted(line, &i, &is_single);
+				word = extract_quoted(line, &i, &is_single,type);
 				if (!word)
 				{
 					print_error2("bash: syntax error near unexpected token","`newline'");
@@ -62,9 +62,8 @@ char	**tokenize(char *line, t_env *env)
 					expanded = ft_strdup(word);
 				else
 					expanded = expand_variables(word, env_path, g_exit_status,
-							0); // <== split=0 for quotes
+							0);
 				ft_strcat(token_buf, expanded);
-;
 				has_token = 1;
 			}
 			else
@@ -102,3 +101,4 @@ char	**tokenize(char *line, t_env *env)
 	tokens[j] = NULL;
 	return (tokens);
 }
+

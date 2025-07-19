@@ -13,7 +13,7 @@
 #include "../include/minishell.h"
 #include "parsing.h"
 
-t_token	*tokenize_input(char *input)
+t_token	*tokenize_input(char *input,t_token *type)
 {
 	int i = 0;
 	t_token *tokens = NULL;
@@ -36,7 +36,7 @@ t_token	*tokenize_input(char *input)
                 if (input[i] == '\'' || input[i] == '\"')
                 {
                     int is_single = 0;
-                    char *quoted = extract_quoted(input, &i, &is_single);
+                    char *quoted = extract_quoted(input, &i, &is_single,type);
                     if (!quoted)
                     {
                         // printf("ccccc\n");

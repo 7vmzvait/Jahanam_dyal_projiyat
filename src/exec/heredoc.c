@@ -73,13 +73,7 @@ int	heredoc_parent_process(t_cmd *cmd, int temp_fd, int pid, int status)
 {
 	close(temp_fd);
 	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status))
-	{
-		g_exit_status = 128 + WTERMSIG(status);
-		if (cmd->heredoc_filename)
-			unlink(cmd->heredoc_filename);
-		return (1);
-	}
+	
 	if (WIFEXITED(status))
 	{
 		g_exit_status = WEXITSTATUS(status);
@@ -90,6 +84,12 @@ int	heredoc_parent_process(t_cmd *cmd, int temp_fd, int pid, int status)
 				return (1);
 			return (0);
 		}
+	}
+	else
+	{
+		if (cmd->heredoc_filename)
+			unlink(cmd->heredoc_filename);
+		return (1);
 	}
 	return (1);
 }

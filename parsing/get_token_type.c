@@ -16,15 +16,15 @@ t_token_type	get_token_type(char *str)
 {
 	if (!str)
 		return (WORD);
-	if (ft_strcmp(str, "|") == 0)
+	if (!ft_strcmp(str, "|"))
 		return (PIPE);
-	if (ft_strcmp(str, "<") == 0)
+	if (!ft_strcmp(str, "<"))
 		return (REDIR_IN);
-	if (ft_strcmp(str, ">") == 0)
+	if (!ft_strcmp(str, ">"))
 		return (REDIR_OUT);
-	if (ft_strcmp(str, ">>") == 0)
+	if (!ft_strcmp(str, ">>"))
 		return (APPEND);
-	if (ft_strcmp(str, "<<") == 0)
+	if (!ft_strcmp(str, "<<"))
 		return (HEREDOC);
 	return (WORD);
 }

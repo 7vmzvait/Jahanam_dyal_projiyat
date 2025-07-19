@@ -13,24 +13,24 @@
 #include "../include/minishell.h"
 #include "parsing.h"
 
-t_cmd *parse_input(char *input,t_env *env,t_context *ctx,t_cmd *cmd)
+t_cmd *parse_input(char *input,t_env *env,t_context *ctx,t_token *type)
 
 {
 	char	**tokens;
 	t_cmd	*cmds;
 
 	ctx->detcted_syntax_error = false;
-	tokens = tokenize(input, env);
+	tokens = tokenize(input, env,type);
 	if (!tokens)
 	{
 		return (NULL);
 	}
-	if (check_syntax_error(tokens))
+	if (check_syntax_error(tokens,type))
 	{
 		g_exit_status = 2;
 		ctx->detcted_syntax_error = true;
 		return (NULL);
 	}
-	cmds = parse_tokens1(tokens,cmd,env);
+	cmds = parse_tokens1(tokens,env,type);
 	return (cmds);
 }

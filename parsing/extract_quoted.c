@@ -12,7 +12,7 @@
 
 #include "parsing.h"
 
-char	*extract_quoted(const char *input, int *i, int *is_single)
+char	*extract_quoted(const char *input, int *i, int *is_single ,t_token *type)
 {
 	char quote;
 	int start, len = 0;
@@ -21,10 +21,10 @@ char	*extract_quoted(const char *input, int *i, int *is_single)
 	*is_single = (quote == '\'');
 	if (quote != '\'' && quote != '"')
 		return (NULL);
-
     (*i)++;
     start = *i;
     while (input[*i] && input[*i] != quote) {
+        type->flags = true;
         (*i)++;
         len++;
     }

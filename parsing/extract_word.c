@@ -17,7 +17,7 @@ char	*extract_word(const char *input, int *i)
 	int start = *i;
 	int len = 0;
 
-	while (input[*i] && !is_space(input[*i]) && !is_special(input[*i]))
+	while (input[*i] && !is_space(input[*i]))
 	{
 		(*i)++;
 		len++;

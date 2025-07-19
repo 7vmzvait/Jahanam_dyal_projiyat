@@ -12,28 +12,40 @@
 
 #include "../../include/minishell.h"
 
-int	ft_echo(char **args)
+void malti_line_skip(char **args, int *i, bool *newline)
 {
-	int		i;
-	bool	newline;
+    while (args[*i])
+    {
+        if (ft_strncmp(args[*i], "-n", 2) == 0)
+        {
+            (*i)++;
+            *newline = false;
+        }
+        else
+            break;
+    }
+}
+int    ft_echo(char **args)
+{
+    int i;
+    bool    newline;
 
-	newline = true;
-	i = 1;
-	if (!args[0] || !args[1])
-		return (0);
-	if (ft_strncmp(args[1], "-n", 2) == 0)
+    newline = true;
+    i = 1;
+    if (!args[1])
 	{
-		newline = false;
-		i++;
+		write(1,"\n",1);
+        return (g_exit_status);
 	}
-	while (args[i])
-	{
-		write(1, args[i], ft_strlen(args[i]));
-		if (args[i + 1])
-			write(1, " ", 1);
-		i++;
-	}
-	if (newline)
-		write(1, "\n", 1);
-	return (g_exit_status);
+    malti_line_skip(args,&i,&newline);
+    while (args[i])
+    {
+        write(1, args[i], ft_strlen(args[i]));
+        if (args[i + 1])
+            write(1, " ", 1);
+        i++;
+    }
+    if (newline)
+        write(1, "\n", 1);
+    return (g_exit_status);
 }
