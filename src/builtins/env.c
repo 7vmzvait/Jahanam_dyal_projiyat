@@ -44,7 +44,7 @@ void	display_env_list(t_env *env)
 	char	**env_var;
 
 	if (!env)
-		return;
+		return ;
 	counter = 0;
 	current = env->env_list;
 	while (current)

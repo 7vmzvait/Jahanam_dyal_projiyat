@@ -52,10 +52,10 @@ static void	heredoc_child_process(char *delimiter, t_env *env, int temp_fd)
 	setup_heredoc_signals();
 	while (1)
 	{
-		write(STDERR_FILENO, "heredoc> ", 9);
+		write(STDOUT_FILENO, "heredoc> ", 9);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
-			break ;
+			exit(1);
 		if (strncmp(line, delimiter, delim_len) == 0 && line[delim_len] == '\n'
 			&& line[delim_len + 1] == '\0')
 		{
@@ -73,7 +73,6 @@ int	heredoc_parent_process(t_cmd *cmd, int temp_fd, int pid, int status)
 {
 	close(temp_fd);
 	waitpid(pid, &status, 0);
-	
 	if (WIFEXITED(status))
 	{
 		g_exit_status = WEXITSTATUS(status);
@@ -88,9 +87,13 @@ int	heredoc_parent_process(t_cmd *cmd, int temp_fd, int pid, int status)
 	else
 	{
 		if (cmd->heredoc_filename)
+		{
 			unlink(cmd->heredoc_filename);
+			free(cmd->heredoc_filename);
+		}
 		return (1);
 	}
+	free(cmd->heredoc_filename);
 	return (1);
 }
 
@@ -111,6 +114,7 @@ int	handle_heredoc(t_cmd *cmd, char *delimiter, t_env *env)
 	if (pid == -1)
 	{
 		close(temp_fd);
+		free(cmd->heredoc_filename);
 		return (1);
 	}
 	if (pid == 0)

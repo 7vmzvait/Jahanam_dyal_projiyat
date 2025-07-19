@@ -4,7 +4,7 @@ RESET = \033[0m
 
 CC = cc
 CFLAGS = -g -O0 -Wall -Wextra -Werror
-SAN =  -g -O0 -fno-omit-frame-pointer -fsanitize=address# 
+#SAN =  -g -O0 -fno-omit-frame-pointer -fsanitize=address# 
 #ADDRLINE = -finstrument-functions # if you want to see defined function ...
 # DEBUG_DEEP =  -pg  # ((pg) if you want to debug using [gprof] #if -g -00 if u.  w. t. see more det..)
 

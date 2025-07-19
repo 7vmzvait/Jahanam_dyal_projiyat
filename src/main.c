@@ -18,9 +18,9 @@ int		g_exit_status = 0;
 void	ft_readline(t_cmd *cmd, t_shell *shell, t_context *ctx, t_env *env_var)
 {
 	char	*input;
-	t_token		*type;
+	t_token	*type;
 
-	type =  malloc(sizeof(t_token));
+	type = (t_token *)ft_malloc(sizeof(t_token), 1);
 	while (1)
 	{
 		input = readline("minishell$ ");
@@ -32,7 +32,7 @@ void	ft_readline(t_cmd *cmd, t_shell *shell, t_context *ctx, t_env *env_var)
 		}
 		if (*input)
 			add_history(input);
-		cmd = parse_input(input, env_var, ctx,type);
+		cmd = parse_input(input, env_var, ctx, type);
 		if (cmd && cmd->args && cmd->args[0]
 			&& is_parent_only_builtin(cmd->args[0]) && cmd->pipe_to_next != 1
 			&& !cmd->infile && !cmd->outfile)

@@ -21,7 +21,7 @@ typedef struct s_context
 {
 	int				prev_pipe;
 	int				save_stdin;
-	bool			is_builtin;				
+	bool			is_builtin;
 	int				last_pid;
 	char			**env;
 	int				fdpipe[2];
@@ -41,13 +41,15 @@ typedef struct s_env
 	t_shell			*env_list;
 }					t_env;
 
-void				setup_heredoc_signals();
+void				setup_heredoc_signals(void);
 void				sig_handler_child(int signum);
 int					handle_heredoc(t_cmd *cmd, char *delimiter, t_env *env);
-bool				is_parent_only_builtin(char *cmd);;
+bool				is_parent_only_builtin(char *cmd);
+;
 void				heredoc_signals_handler(void);
 void				sigint_handler(int sig);
-void				execute_builtins_no_redir(t_cmd *cmd,t_env *env,t_shell **shell);
+void				execute_builtins_no_redir(t_cmd *cmd, t_env *env,
+						t_shell **shell);
 int					is_builtn_no_redir(char *cmd);
 void				print_exit_error(int option, char **args);
 void				kill_process(void);
@@ -59,7 +61,7 @@ void				free_cmd_list(t_cmd *cmd);
 t_env				*init_env(char **env);
 void				cleanup_memory(t_cmd *cmd, t_context *ctx, t_env *env,
 						t_shell *shell);
-void				here_doc(char *del,t_cmd *cmd,t_env *env);
+void				here_doc(char *del, t_cmd *cmd, t_env *env);
 int					run_builtins(t_cmd *cmd, t_shell *shell, t_env *env,
 						t_context *ctx);
 int					execute_builtins(t_cmd *cmd, t_shell *shell, t_env *env);
@@ -71,7 +73,8 @@ void				init_shell(char **env, t_context *ctx, t_shell *shell,
 void				free_cmd_args(t_cmd *cmd);
 void				free_env(char **env);
 void				handle_signals(int sig);
-t_cmd *parse_input(char *input,t_env *env,t_context *ctx,t_token *type);
+t_cmd				*parse_input(char *input, t_env *env, t_context *ctx,
+						t_token *type);
 int					redir_infile(t_cmd *cmd);
 int					redir_outfile(t_cmd *cmd);
 char				*getenv_path(t_env *env);
@@ -79,7 +82,7 @@ int					is_builtin_command(char *command);
 int					execute_builtins(t_cmd *cmd, t_shell *shell, t_env *env);
 int					run_builtins(t_cmd *cmd, t_shell *shell, t_env *env,
 						t_context *ctx);
-char				**tokenize(char *line, t_env *env,t_token *type);
+char				**tokenize(char *line, t_env *env, t_token *type);
 int					ft_export1(t_shell **shell, char **args, t_env *env);
 char				*ft_create_env_line(t_shell *shell);
 char				**list_to_array(t_env *env, t_shell *shell);
